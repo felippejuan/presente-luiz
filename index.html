@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amor e Calmaria — Para Luiz Vitinho</title>
+  <meta name="description" content="Uma página romântica personalizada com carta, fotos, música e voucher para o Luiz Vitinho." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@0.468.0/font/lucide.css">
+  <style>
+    :root {
+      --bg: #FAF7F2;
+      --bg-soft: #F4EEE7;
+      --text: #3E3B37;
+      --muted: #8C8276;
+      --gold: #C5A059;
+      --gold-dark: #B38F4B;
+      --border: #E8DFD8;
+      --white: #ffffff;
+      --shadow-sm: 0 8px 24px rgba(62,59,55,0.08);
+      --shadow-lg: 0 20px 50px rgba(62,59,55,0.14);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --container: 1200px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .container { width: min(calc(100% - 32px), var(--container)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-title {
+      font-size: 20px; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .icon-heart { color: var(--gold); }
+    .audio-btn {
+      display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(197,160,89,.35);
+      color: var(--gold); background: transparent; border-radius: 999px; padding: 12px 16px; cursor: pointer;
+      transition: .25s ease;
+    }
+    .audio-btn:hover { background: var(--gold); color: white; }
+    .audio-btn span { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .hero {
+      position: relative; min-height: 85vh; display: flex; align-items: center; justify-content: center; overflow: hidden;
+      text-align: center; padding: 56px 0 90px;
+    }
+    .blur-a, .blur-b {
+      position: absolute; border-radius: 999px; filter: blur(60px); pointer-events: none;
+    }
+    .blur-a { width: 280px; height: 280px; background: #E8DFD8; top: 40px; left: 40px; opacity: .8; }
+    .blur-b { width: 360px; height: 360px; background: rgba(197,160,89,.12); right: 20px; bottom: 20px; }
+    .eyebrow { color: var(--gold); font-size: 12px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; }
+    .hero h1 {
+      margin: 18px 0 0; font-size: clamp(52px, 8vw, 112px); line-height: .95; font-weight: 300;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; font-weight: 400; }
+    .divider { width: 64px; height: 1px; background: var(--gold); margin: 26px auto; }
+    .hero-quote {
+      max-width: 700px; margin: 0 auto; font-size: clamp(26px, 2.6vw, 34px); line-height: 1.35; color: #7b736a; font-weight: 300;
+    }
+    .cta {
+      display: inline-flex; align-items: center; gap: 12px; margin-top: 34px; background: var(--text); color: var(--bg);
+      padding: 16px 26px; border-radius: 999px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .18em;
+      transition: .25s ease; box-shadow: var(--shadow-sm);
+    }
+    .cta:hover { transform: translateY(-2px); background: var(--gold); }
+    .scroll-indicator {
+      position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .25em;
+      animation: bob 1.8s ease-in-out infinite;
+    }
+    .scroll-indicator .line { width: 1px; height: 26px; background: var(--gold); }
+    @keyframes bob { 0%,100% { transform: translateX(-50%) translateY(0);} 50% { transform: translateX(-50%) translateY(6px);} }
+    section { padding: 88px 0; }
+    .section-head { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+    .section-head h2 { font-size: clamp(40px, 5vw, 58px); margin: 6px 0 10px; font-weight: 300; }
+    .section-head p { margin: 0 auto; color: #736a61; font-size: 20px; line-height: 1.5; font-style: italic; font-family: 'Cormorant Garamond', Georgia, serif; }
+    .photo-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .photo-card {
+      position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); background: #efe8df;
+    }
+    .photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .photo-card:hover img { transform: scale(1.04); }
+    .reveal {
+      background: rgba(232,223,216,.4);
+    }
+    .reveal-wrap { max-width: 860px; margin: 0 auto; text-align: center; }
+    .envelope {
+      position: relative; background: var(--white); border: 2px solid var(--border); border-radius: 24px; padding: 48px 32px; box-shadow: var(--shadow-lg);
+      cursor: pointer; transition: .35s ease; max-width: 620px; margin: 0 auto;
+    }
+    .envelope:hover { transform: translateY(-6px); }
+    .seal {
+      position: relative; width: 88px; height: 88px; border-radius: 999px; background: var(--text); color: var(--bg);
+      display: grid; place-items: center; margin: 0 auto 22px; box-shadow: var(--shadow-sm);
+    }
+    .seal::after {
+      content: ''; position: absolute; inset: 6px; border-radius: 999px; border: 1px solid rgba(197,160,89,.35);
+    }
+    .envelope p { margin: 0; }
+    .envelope .to { font-size: 34px; font-style: italic; }
+    .envelope .hint { margin-top: 10px; color: #8c8276; font-size: 12px; text-transform: uppercase; letter-spacing: .15em; }
+    .letter {
+      display: none; text-align: left; background: var(--bg); border: 2px solid rgba(197,160,89,.3); border-radius: 24px; padding: 34px; box-shadow: var(--shadow-lg); max-width: 760px; margin: 0 auto;
+      position: relative;
+    }
+    .letter.open { display: block; }
+    .letter-close {
+      position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; cursor: pointer;
+    }
+    .letter-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 24px;
+    }
+    .letter-body {
+      white-space: pre-line; font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(28px, 2.6vw, 34px); line-height: 1.45; font-style: italic; font-weight: 300;
+    }
+    .voucher-block { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .voucher-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; color: #9c948c; text-transform: uppercase; margin-bottom: 14px; }
+    .voucher {
+      max-width: 360px; background: #fff; border: 2px solid rgba(197,160,89,.3); border-radius: 20px; padding: 22px; box-shadow: var(--shadow-sm);
+    }
+    .voucher-title { font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #5c554f; }
+    .voucher-meta {
+      display: flex; justify-content: space-between; gap: 12px; color: #8B0000; font-size: 14px; font-weight: 500; margin-top: 10px;
+    }
+    .voucher-meta .mono { font-family: monospace; }
+    .print-btn {
+      margin-top: 16px; display: inline-flex; align-items: center; gap: 10px; background: var(--gold); color: white; border: none; border-radius: 12px; padding: 13px 18px; cursor: pointer;
+      font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; box-shadow: var(--shadow-sm);
+      transition: .25s ease;
+    }
+    .print-btn:hover { background: var(--gold-dark); }
+    .experience-grid {
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 60px; align-items: center;
+    }
+    .experience h3 { font-size: clamp(40px, 4vw, 58px); line-height: 1.05; margin: 8px 0 18px; font-weight: 300; }
+    .experience-intro { color: #6f665d; line-height: 1.7; }
+    .feature-list { margin-top: 34px; display: grid; gap: 28px; }
+    .feature-item { display: grid; grid-template-columns: 44px 1fr; gap: 16px; }
+    .feature-num { color: var(--gold); font-size: 30px; font-weight: 600; font-family: 'Cormorant Garamond', Georgia, serif; }
+    .feature-item h5 {
+      margin: 0 0 6px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase;
+    }
+    .feature-item p { margin: 0; color: #6f665d; font-size: 14px; line-height: 1.65; }
+    .spa-visual { position: relative; }
+    .spa-frame {
+      position: absolute; inset: 18px; border: 1px solid var(--gold); transform: translate(12px, 12px); pointer-events: none; z-index: 2;
+    }
+    .spa-image-wrap { aspect-ratio: 4 / 5; background: #e8dfd8; overflow: hidden; box-shadow: var(--shadow-lg); position: relative; z-index: 1; }
+    .spa-image-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    footer {
+      padding: 48px 16px 72px; text-align: center; border-top: 1px solid var(--border); color: #a59c92;
+    }
+    footer .love { font-size: 32px; color: var(--text); font-style: italic; }
+    footer .meta { text-transform: uppercase; letter-spacing: .15em; font-size: 10px; margin-top: 10px; }
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .experience-grid { grid-template-columns: 1fr; gap: 38px; }
+      .topbar-inner { flex-direction: column; justify-content: center; padding: 14px 0; }
+      .brand-title { white-space: normal; text-align: center; font-size: 17px; }
+    }
+
+    @media (max-width: 640px) {
+      section { padding: 68px 0; }
+      .hero { min-height: auto; padding-top: 48px; }
+      .hero-quote { font-size: 24px; }
+      .photo-grid { grid-template-columns: 1fr; gap: 18px; }
+      .letter { padding: 26px 20px; }
+      .voucher-meta { flex-direction: column; }
+      .envelope { padding: 40px 22px; }
+      .audio-btn { width: 100%; justify-content: center; }
+    }
+
+    @media print {
+      body * { visibility: hidden !important; background: white !important; }
+      #printable-voucher-area, #printable-voucher-area * { visibility: visible !important; }
+      #printable-voucher-area {
+        position: absolute; left: 5%; top: 15%; width: 90%; border: 2px solid #E8DFD8 !important; padding: 30px !important;
+        box-shadow: none !important; background: #FAF7F2 !important; border-radius: 12px;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-audio" src="https://ia801509.us.archive.org/29/items/marisa-monte-amor-i-love-you/Marisa%20Monte%20-%20Amor%20I%20Love%20You.mp3" loop></audio>
+
+  <nav class="topbar no-print">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <i class="icon-heart icon-heart-fill"></i>
+        <div class="brand-title font-serif">Amor e Calmaria — Para Luiz Vitinho</div>
+      </div>
+      <button id="audio-toggle" class="audio-btn" type="button" aria-label="Ativar ou pausar trilha sonora">
+        <i class="icon-volume-x"></i>
+        <span>Ativar Trilha Sonora</span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero no-print">
+      <div class="blur-a"></div>
+      <div class="blur-b"></div>
+      <div class="container" style="position:relative; z-index:2;">
+        <div class="eyebrow">Para Luiz Vitinho, preparado com carinho.</div>
+        <h1 class="font-serif">te amo <br><em>um infinito.</em></h1>
+        <div class="divider"></div>
+        <p class="hero-quote font-serif">“Na tentativa de te surpreender e entregar seu presente com classe, bb.”</p>
+        <a class="cta" href="#presente-section">
+          Abrir seu Presente
+          <i class="icon-chevron-right"></i>
+        </a>
+      </div>
+      <div class="scroll-indicator">
+        <span>Rolar</span>
+        <div class="line"></div>
+      </div>
+    </section>
+
+    <section class="no-print">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">lembranças</div>
+          <h2 class="font-serif">Nossos Momentos</h2>
+          <div class="divider"></div>
+          <p>“voltei nas fotos que temos desde março de 2025 e foi tão gostoso saber que vivi momentos muito felizes ao seu lado — e ansioso para viver muito mais!”</p>
+        </div>
+        <div class="photo-grid">
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216775/v2_06cba461-e677-4a02-98d1-2414064f5121_2_bxgdx0.jpg" alt="Nossos momentos e histórias - Foto 1"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216771/20250717_212903_jtfi93.jpg" alt="Nossos momentos e histórias - Foto 2"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216767/IMG-20260412-WA0175_ahi2v9.jpg" alt="Nossos momentos e histórias - Foto 3"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216767/IMG-20260509-WA0158_gbtobu.jpg" alt="Nossos momentos e histórias - Foto 4"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216767/IMG_9965_xlhf5d.jpg" alt="Nossos momentos e histórias - Foto 5"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216767/IMG_9635_fvnoef.jpg" alt="Nossos momentos e histórias - Foto 6"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216767/IMG-20250510-WA0050_udfl0z.jpg" alt="Nossos momentos e histórias - Foto 7"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216766/IMG-20250809-WA0095_cqzqmt.jpg" alt="Nossos momentos e histórias - Foto 8"></div>
+          <div class="photo-card"><img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781216766/IMG-20250418-WA0016_zmel42.jpg" alt="Nossos momentos e histórias - Foto 9"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="presente-section" class="reveal no-print">
+      <div class="container reveal-wrap">
+        <div class="eyebrow">Momento de Revelação</div>
+        <h2 class="font-serif" style="font-size:clamp(42px,5vw,60px); font-weight:300; margin:10px 0 36px;">Abra o seu presente</h2>
+
+        <div id="envelope" class="envelope">
+          <div class="seal"><i class="icon-heart-fill" style="font-size:32px; color:#FAF7F2;"></i></div>
+          <p class="font-serif to">Para: Luiz Vitinho</p>
+          <p class="hint">Toque no selo para abrir</p>
+        </div>
+
+        <div id="letter" class="letter">
+          <button id="close-letter" class="letter-close" type="button">Fechar Carta</button>
+          <div class="letter-top">
+            <span class="font-serif" style="font-size:30px; color:var(--gold); font-style:italic;">Para: Luiz Vitinho</span>
+            <i class="icon-heart-fill" style="color:var(--gold);"></i>
+          </div>
+
+          <div class="letter-body">Luiz Vitinho,
+
+Eu sei o quanto você fica exausto com seus plantões (fisicamente e emocionalmente). Mesmo assim, você sempre chega em casa e fica presente comigo e com o Chiquinho.
+
+Acho que nada seria mais simbólico do que te fazer desacelerar e de te presentear com um momento de autocuidado e descanso.
+
+Te amo demais e espero que você aproveite bastante o presente.
+
+Com carinho,
+Lippinho</div>
+
+          <div class="voucher-block">
+            <span class="voucher-label">Seu Voucher de Acesso:</span>
+
+            <div id="printable-voucher-area" class="voucher">
+              <div class="voucher-title">Mini Day Spa</div>
+              <div class="voucher-meta">
+                <span>Val. 11/09/2026</span>
+                <span class="mono">Cód: ZSSPPF3</span>
+              </div>
+            </div>
+
+            <button id="print-btn" class="print-btn no-print" type="button">
+              <i class="icon-printer"></i>
+              Salvar Voucher (PDF)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience no-print">
+      <div class="container experience-grid">
+        <div>
+          <div class="eyebrow">O que espera por você</div>
+          <h3 class="font-serif">Uma jornada completa de reconexão sensorial e calma profunda.</h3>
+          <p class="experience-intro">O Mini Day Spa no Buddha Spa foi minuciosamente planejado para oferecer uma experiência de desligamento total do cotidiano. Da entrada à saída, cada momento é focado no bem-estar integral.</p>
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="feature-num">01.</div>
+              <div>
+                <h5>Relaxante Corporal 60 minutos *</h5>
+                <p>Massagem anti-estresse aplicada com óleos. Terapia realizada em todo o corpo, combinando movimentos de deslizamento, amassamento, rolamento e percussão. *Ou 50 minutos, conforme disponibilidade de cada unidade.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-num">02.</div>
+              <div>
+                <h5>Banho de Imersão Individual (20 a 30min)</h5>
+                <p>O banho de imersão é altamente relaxante e utiliza água na temperatura de 38º a 40º C, preparada com sais de banho e pétalas de rosas. As tinas podem ser de madeira ou de PVC, conforme disponibilidade de cada unidade. Todos os banhos são acompanhados de taça de vinho e castanhas.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-num">03.</div>
+              <div>
+                <h5>Acesso às Áreas de Relaxamento</h5>
+                <p>Livre trânsito e recepção para desfrutar da quietude e o silêncio confortável do local.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="spa-visual">
+          <div class="spa-frame"></div>
+          <div class="spa-image-wrap">
+            <img loading="lazy" src="https://res.cloudinary.com/diy4hbotq/image/upload/v1781285134/Jardins-03_jt947v.jpg" alt="Área de Relaxamento Jardins Buddha Spa">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="no-print">
+    <div class="love font-serif">“Te amo um infinito.”</div>
+    <div class="meta">Feito sob medida por Lippinho para Luiz Vitinho • 2026</div>
+  </footer>
+
+  <script>
+    const audio = document.getElementById('bg-audio');
+    const audioToggle = document.getElementById('audio-toggle');
+    const audioIcon = audioToggle.querySelector('i');
+    const audioText = audioToggle.querySelector('span');
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    const closeLetter = document.getElementById('close-letter');
+    const printBtn = document.getElementById('print-btn');
+    let isAudioPlaying = false;
+    let firstInteractionDone = false;
+
+    function updateAudioUI() {
+      audioIcon.className = isAudioPlaying ? 'icon-volume-2' : 'icon-volume-x';
+      audioText.textContent = isAudioPlaying ? 'Tocando: Amor I Love You' : 'Ativar Trilha Sonora';
+    }
+
+    async function playAudio() {
+      try {
+        await audio.play();
+        isAudioPlaying = true;
+      } catch (e) {
+        isAudioPlaying = false;
+      }
+      updateAudioUI();
+    }
+
+    function pauseAudio() {
+      audio.pause();
+      isAudioPlaying = false;
+      updateAudioUI();
+    }
+
+    function toggleAudio() {
+      if (isAudioPlaying) pauseAudio(); else playAudio();
+    }
+
+    function openLetter() {
+      envelope.classList.add('hidden');
+      letter.classList.add('open');
+    }
+
+    function closeLetterFn() {
+      letter.classList.remove('open');
+      envelope.classList.remove('hidden');
+    }
+
+    function handleFirstInteraction() {
+      if (!firstInteractionDone) {
+        firstInteractionDone = true;
+        playAudio();
+      }
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+    }
+
+    audioToggle.addEventListener('click', toggleAudio);
+    envelope.addEventListener('click', openLetter);
+    closeLetter.addEventListener('click', closeLetterFn);
+    printBtn.addEventListener('click', () => window.print());
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    window.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    updateAudioUI();
+  </script>
+</body>
+</html>
